@@ -1,0 +1,144 @@
+openapi: 3.0.3
+info:
+  title: Condat Building Project - OpenAPI 3.0
+  description: API for Condat Building
+  version: 1.0.0
+tags:
+  - name: person-controller
+    description: Person Controller
+paths:
+  /api/enter:
+    post:
+      tags:
+        - person-controller
+      operationId: enter
+      summary: People enter the building
+      parameters:
+        - name: count
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Number of people has been updated
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Number of people has been updated"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Invalid parameter"
+        '409':
+          description: Maximum capacity exceeded
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Maximum capacity exceeded"
+  /api/leave:
+    post:
+      tags:
+        - person-controller
+      operationId: leave
+      summary: People leave the building
+      parameters:
+        - name: count
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Number of people has been updated
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Number of people has been updated"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Invalid parameter"
+        '409':
+          description: Number of people to leave exceeds the current number in the building
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Number of people to leave exceeds the current number in the building"
+  /api/count:
+    get:
+      tags:
+        - person-controller
+      operationId: count
+      summary: Number of people in the building
+      parameters:
+        - name: time
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: "2018-03-20T09:12:28Z"
+      responses:
+        '200':
+          description: Number of people in the building
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Count: 5"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Invalid point in time"
+  /api/average:
+    get:
+      tags:
+        - person-controller
+      operationId: average
+      summary: Average number of people in the building
+      parameters:
+        - name: start
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+            example: "2018-03-20T09:12:28Z"
+        - name: end
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+            example: "2018-03-20T09:12:28Z"
+      responses:
+        '200':
+          description: Average number of people in the building
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Average: 2.5"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Invalid time interval"
